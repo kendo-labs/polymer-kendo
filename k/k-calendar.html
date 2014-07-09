@@ -1,0 +1,94 @@
+<link rel="import" href="k-core.html" />
+
+<polymer-element name="k-calendar" attributes="value min max dates url culture footer format month start depth animation dataSource">
+
+  <template>
+    <link rel="stylesheet" href="../kendo/css/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="../kendo/css/web/kendo.default.min.css" />
+    <div id="element"></div>
+  </template>
+
+  <script>
+    Polymer("k-calendar", {
+
+      ready: function() {
+        var plm = this;
+
+        // DIY, because <content> is lame.
+        var range = document.createRange();
+        range.selectNodeContents(this);
+        var doc = range.extractContents();
+        plm.$.element.insertBefore(doc, null);
+
+        var options = {};
+        ["value","min","max","dates","url","culture","footer","format","month","start","depth","animation","dataSource"].forEach(function(name){
+          if (plm[name] != null) {
+            options[name] = plm[name];
+          }
+        });
+        options.change = function() {
+          plm.value = this.value();
+        };
+        plm.kendoWidget = $(plm.$.element).kendoCalendar(options).data("kendoCalendar");
+      },
+
+      valueChanged: function() {
+        // XXX: not all widgets have a value method
+        this.kendoWidget.value(this.value);
+      },
+
+      // options bindings
+       
+      minChanged: function() {
+        this.kendoWidget.setOptions({ min: this.min });
+      },
+      
+      maxChanged: function() {
+        this.kendoWidget.setOptions({ max: this.max });
+      },
+      
+      datesChanged: function() {
+        this.kendoWidget.setOptions({ dates: this.dates });
+      },
+      
+      urlChanged: function() {
+        this.kendoWidget.setOptions({ url: this.url });
+      },
+      
+      cultureChanged: function() {
+        this.kendoWidget.setOptions({ culture: this.culture });
+      },
+      
+      footerChanged: function() {
+        this.kendoWidget.setOptions({ footer: this.footer });
+      },
+      
+      formatChanged: function() {
+        this.kendoWidget.setOptions({ format: this.format });
+      },
+      
+      monthChanged: function() {
+        this.kendoWidget.setOptions({ month: this.month });
+      },
+      
+      startChanged: function() {
+        this.kendoWidget.setOptions({ start: this.start });
+      },
+      
+      depthChanged: function() {
+        this.kendoWidget.setOptions({ depth: this.depth });
+      },
+      
+      animationChanged: function() {
+        this.kendoWidget.setOptions({ animation: this.animation });
+      },
+      
+      dataSourceChanged: function() {
+        this.kendoWidget.setOptions({ dataSource: this.dataSource });
+      },
+      
+
+    });
+  </script>
+
+</polymer-element>

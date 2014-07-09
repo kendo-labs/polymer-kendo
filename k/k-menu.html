@@ -1,0 +1,78 @@
+<link rel="import" href="k-core.html" />
+
+<polymer-element name="k-menu" attributes="animation orientation direction openOnClick closeOnClick hoverDelay popupCollision dataSource">
+
+  <template>
+    <link rel="stylesheet" href="../kendo/css/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="../kendo/css/web/kendo.default.min.css" />
+    <ul id="element"></ul>
+  </template>
+
+  <script>
+    Polymer("k-menu", {
+
+      ready: function() {
+        var plm = this;
+
+        // DIY, because <content> is lame.
+        var range = document.createRange();
+        range.selectNodeContents(this);
+        var doc = range.extractContents();
+        plm.$.element.insertBefore(doc, null);
+
+        var options = {};
+        ["animation","orientation","direction","openOnClick","closeOnClick","hoverDelay","popupCollision","dataSource"].forEach(function(name){
+          if (plm[name] != null) {
+            options[name] = plm[name];
+          }
+        });
+        options.change = function() {
+          plm.value = this.value();
+        };
+        plm.kendoWidget = $(plm.$.element).kendoMenu(options).data("kendoMenu");
+      },
+
+      valueChanged: function() {
+        // XXX: not all widgets have a value method
+        this.kendoWidget.value(this.value);
+      },
+
+      // options bindings
+      
+      animationChanged: function() {
+        this.kendoWidget.setOptions({ animation: this.animation });
+      },
+      
+      orientationChanged: function() {
+        this.kendoWidget.setOptions({ orientation: this.orientation });
+      },
+      
+      directionChanged: function() {
+        this.kendoWidget.setOptions({ direction: this.direction });
+      },
+      
+      openOnClickChanged: function() {
+        this.kendoWidget.setOptions({ openOnClick: this.openOnClick });
+      },
+      
+      closeOnClickChanged: function() {
+        this.kendoWidget.setOptions({ closeOnClick: this.closeOnClick });
+      },
+      
+      hoverDelayChanged: function() {
+        this.kendoWidget.setOptions({ hoverDelay: this.hoverDelay });
+      },
+      
+      popupCollisionChanged: function() {
+        this.kendoWidget.setOptions({ popupCollision: this.popupCollision });
+      },
+      
+      dataSourceChanged: function() {
+        this.kendoWidget.setOptions({ dataSource: this.dataSource });
+      },
+      
+
+    });
+  </script>
+
+</polymer-element>

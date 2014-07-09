@@ -1,0 +1,70 @@
+<link rel="import" href="k-core.html" />
+
+<polymer-element name="k-contextmenu" attributes="filter showOn orientation alignToAnchor target dataSource">
+
+  <template>
+    <link rel="stylesheet" href="../kendo/css/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="../kendo/css/web/kendo.default.min.css" />
+    <ul id="element"></ul>
+  </template>
+
+  <script>
+    Polymer("k-contextmenu", {
+
+      ready: function() {
+        var plm = this;
+
+        // DIY, because <content> is lame.
+        var range = document.createRange();
+        range.selectNodeContents(this);
+        var doc = range.extractContents();
+        plm.$.element.insertBefore(doc, null);
+
+        var options = {};
+        ["filter","showOn","orientation","alignToAnchor","target","dataSource"].forEach(function(name){
+          if (plm[name] != null) {
+            options[name] = plm[name];
+          }
+        });
+        options.change = function() {
+          plm.value = this.value();
+        };
+        plm.kendoWidget = $(plm.$.element).kendoContextMenu(options).data("kendoContextMenu");
+      },
+
+      valueChanged: function() {
+        // XXX: not all widgets have a value method
+        this.kendoWidget.value(this.value);
+      },
+
+      // options bindings
+      
+      filterChanged: function() {
+        this.kendoWidget.setOptions({ filter: this.filter });
+      },
+      
+      showOnChanged: function() {
+        this.kendoWidget.setOptions({ showOn: this.showOn });
+      },
+      
+      orientationChanged: function() {
+        this.kendoWidget.setOptions({ orientation: this.orientation });
+      },
+      
+      alignToAnchorChanged: function() {
+        this.kendoWidget.setOptions({ alignToAnchor: this.alignToAnchor });
+      },
+      
+      targetChanged: function() {
+        this.kendoWidget.setOptions({ target: this.target });
+      },
+      
+      dataSourceChanged: function() {
+        this.kendoWidget.setOptions({ dataSource: this.dataSource });
+      },
+      
+
+    });
+  </script>
+
+</polymer-element>

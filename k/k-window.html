@@ -1,0 +1,122 @@
+<link rel="import" href="k-core.html" />
+
+<polymer-element name="k-window" attributes="animation title actions autoFocus modal resizable draggable minWidth minHeight maxWidth maxHeight pinned position content visible height width appendTo dataSource">
+
+  <template>
+    <link rel="stylesheet" href="../kendo/css/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="../kendo/css/web/kendo.default.min.css" />
+    <div id="element"></div>
+  </template>
+
+  <script>
+    Polymer("k-window", {
+
+      ready: function() {
+        var plm = this;
+
+        // DIY, because <content> is lame.
+        var range = document.createRange();
+        range.selectNodeContents(this);
+        var doc = range.extractContents();
+        plm.$.element.insertBefore(doc, null);
+
+        var options = {};
+        ["animation","title","actions","autoFocus","modal","resizable","draggable","minWidth","minHeight","maxWidth","maxHeight","pinned","position","content","visible","height","width","appendTo","dataSource"].forEach(function(name){
+          if (plm[name] != null) {
+            options[name] = plm[name];
+          }
+        });
+        options.change = function() {
+          plm.value = this.value();
+        };
+        plm.kendoWidget = $(plm.$.element).kendoWindow(options).data("kendoWindow");
+      },
+
+      valueChanged: function() {
+        // XXX: not all widgets have a value method
+        this.kendoWidget.value(this.value);
+      },
+
+      // options bindings
+      
+      animationChanged: function() {
+        this.kendoWidget.setOptions({ animation: this.animation });
+      },
+      
+      titleChanged: function() {
+        this.kendoWidget.setOptions({ title: this.title });
+      },
+      
+      actionsChanged: function() {
+        this.kendoWidget.setOptions({ actions: this.actions });
+      },
+      
+      autoFocusChanged: function() {
+        this.kendoWidget.setOptions({ autoFocus: this.autoFocus });
+      },
+      
+      modalChanged: function() {
+        this.kendoWidget.setOptions({ modal: this.modal });
+      },
+      
+      resizableChanged: function() {
+        this.kendoWidget.setOptions({ resizable: this.resizable });
+      },
+      
+      draggableChanged: function() {
+        this.kendoWidget.setOptions({ draggable: this.draggable });
+      },
+      
+      minWidthChanged: function() {
+        this.kendoWidget.setOptions({ minWidth: this.minWidth });
+      },
+      
+      minHeightChanged: function() {
+        this.kendoWidget.setOptions({ minHeight: this.minHeight });
+      },
+      
+      maxWidthChanged: function() {
+        this.kendoWidget.setOptions({ maxWidth: this.maxWidth });
+      },
+      
+      maxHeightChanged: function() {
+        this.kendoWidget.setOptions({ maxHeight: this.maxHeight });
+      },
+      
+      pinnedChanged: function() {
+        this.kendoWidget.setOptions({ pinned: this.pinned });
+      },
+      
+      positionChanged: function() {
+        this.kendoWidget.setOptions({ position: this.position });
+      },
+      
+      contentChanged: function() {
+        this.kendoWidget.setOptions({ content: this.content });
+      },
+      
+      visibleChanged: function() {
+        this.kendoWidget.setOptions({ visible: this.visible });
+      },
+      
+      heightChanged: function() {
+        this.kendoWidget.setOptions({ height: this.height });
+      },
+      
+      widthChanged: function() {
+        this.kendoWidget.setOptions({ width: this.width });
+      },
+      
+      appendToChanged: function() {
+        this.kendoWidget.setOptions({ appendTo: this.appendTo });
+      },
+      
+      dataSourceChanged: function() {
+        this.kendoWidget.setOptions({ dataSource: this.dataSource });
+      },
+      
+
+    });
+  </script>
+
+</polymer-element>

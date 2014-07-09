@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="k/k-calendar.html" />
+    <link rel="import" href="k/k-menu.html" />
+    <link rel="import" href="k/k-window.html" />
+    <link rel="stylesheet" href="kendo/css/web/kendo.common.min.css" />
+    <link rel="stylesheet" href="kendo/css/web/kendo.default.min.css" />
+    <style>
+      body {
+        font: 12px arial,sans-serif;
+      }
+    </style>
+  </head>
+  <body unresolved touch-action="auto">
+
+    <polymer-element name="my-test" attributes="test">
+      <template>
+
+        <p>
+          Data binding on <tt>value</tt>.  Both calendars and the text below
+          are bound to a Date element in the "model".
+        </p>
+
+        <k-calendar value="{{calendarValue}}" footer="{{dasFooter}}"></k-calendar>
+
+        <k-calendar value="{{calendarValue}}"></k-calendar>
+
+        <p>
+          Value is {{ calendarValue }}.  <button on-click="{{setToday}}">Set to today</button>
+        </p>
+
+        <k-menu dataSource="{{menu}}"></k-menu>
+
+        <p>
+          Submenus are wrongfully positioned for some reason.
+        </p>
+
+        <k-menu>
+          <li>Foo
+            <ul>
+              <li>Foo 1
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+              <li>Foo 2
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+              <li>Foo 3
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Foo
+            <ul>
+              <li>Foo 1
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+              <li>Foo 2
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+              <li>Foo 3
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>Foo
+            <ul>
+              <li>Foo 1
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+              <li>Foo 2
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+              <li>Foo 3
+                <ul>
+                  <li>Foo 1</li>
+                  <li>Foo 2</li>
+                  <li>Foo 3</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </k-menu>
+
+        <k-window id="window" draggable="true" resizable="true"
+                  title="{{windowTitle}}" modal="true" width="400" height="300">
+          <h2>Weirdo</h2>
+          <p>
+            Title binding does not work.  It does work in the following input though:
+          </p>
+          <input value="{{windowTitle}}" />
+          <p>
+            It seems to be because the name of the attribute is "title".
+            If I manually change k-window.html to assign another attribute
+            to options.title, then it does work.  This means that in order
+            to provide reliable options without clashing with other oddities
+            that may be, we would have to prefix the names like we do in
+            Angular.
+          </p>
+        </k-window>
+
+        <p>
+          <button on-click="{{popupWindow}}">{{windowTitle}}</button>
+        </p>
+      </template>
+      <script>
+        Polymer("my-test", {
+          calendarValue: new Date(2014, 0, 24),
+          setToday: function() {
+            this.calendarValue = new Date();
+          },
+          dasFooter: "Foo bar baz",
+          menu: [
+            { text: "foo" },
+            { text: "bar" },
+            { text: "baz" }
+          ],
+          popupWindow: function() {
+            this.$.window.kendoWidget.open().center();
+          },
+          windowTitle: "Hello Polymer"
+        });
+      </script>
+    </polymer-element>
+
+    <my-test></my-test>
+
+  </body>
+</html>
