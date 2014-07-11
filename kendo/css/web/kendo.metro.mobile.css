@@ -276,7 +276,6 @@
   left: 50%;
   width: 180px;
   height: 130px;
-  opacity: .85;
   z-index: 100000;
   padding: 30px 30px;
   position: absolute;
@@ -285,7 +284,7 @@
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .km-loader h1 {
   font-size: 1rem;
@@ -2559,7 +2558,6 @@ body:before {
   width: 100%;
   height: 100%;
   text-align: left;
-  margin-left: -0.06em;
   vertical-align: middle;
   background-size: auto;
   font: 1em/1em "Kendo UI";

@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <script src="bower_components/platform/platform.js"></script>
     <link rel="import" href="k/k-calendar.html" />
+    <link rel="import" href="k/k-datepicker.html" />
     <link rel="import" href="k/k-menu.html" />
     <link rel="import" href="k/k-window.html" />
     <link rel="stylesheet" href="kendo/css/web/kendo.common.min.css" />
@@ -30,6 +31,10 @@
 
         <p>
           Value is {{ calendarValue }}.  <button on-click="{{setToday}}">Set to today</button>
+        </p>
+
+        <p>
+          <k-datepicker value="{{calendarValue}}"></k-datepicker>
         </p>
 
         <k-menu dataSource="{{menu}}"></k-menu>

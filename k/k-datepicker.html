@@ -1,13 +1,13 @@
 <link rel="import" href="k-core.html" />
 
-<polymer-element name="k-calendar" attributes="value min max dates url culture footer format month start depth animation dataSource">
+<polymer-element name="k-datepicker" attributes="value footer format culture parseFormats min max start depth animation month dates ARIATemplate dataSource">
 
   <template>
-    <div id="element"></div>
+    <input id="element"></input>
   </template>
 
   <script>
-    Polymer("k-calendar", {
+    Polymer("k-datepicker", {
 
       ready: function() {
         var plm = this;
@@ -19,7 +19,7 @@
         plm.$.element.insertBefore(doc, null);
 
         var options = {};
-        ["value","min","max","dates","url","culture","footer","format","month","start","depth","animation","dataSource"].forEach(function(name){
+        ["value","footer","format","culture","parseFormats","min","max","start","depth","animation","month","dates","ARIATemplate","dataSource"].forEach(function(name){
           if (plm[name] != null) {
             options[name] = plm[name];
           }
@@ -27,7 +27,7 @@
         options.change = function() {
           plm.value = this.value();
         };
-        plm.kendoWidget = $(plm.$.element).kendoCalendar(options).data("kendoCalendar");
+        plm.kendoWidget = $(plm.$.element).kendoDatePicker(options).data("kendoDatePicker");
       },
 
       valueChanged: function() {
@@ -37,26 +37,6 @@
 
       // options bindings
        
-      minChanged: function() {
-        this.kendoWidget.setOptions({ min: this.min });
-      },
-      
-      maxChanged: function() {
-        this.kendoWidget.setOptions({ max: this.max });
-      },
-      
-      datesChanged: function() {
-        this.kendoWidget.setOptions({ dates: this.dates });
-      },
-      
-      urlChanged: function() {
-        this.kendoWidget.setOptions({ url: this.url });
-      },
-      
-      cultureChanged: function() {
-        this.kendoWidget.setOptions({ culture: this.culture });
-      },
-      
       footerChanged: function() {
         this.kendoWidget.setOptions({ footer: this.footer });
       },
@@ -65,8 +45,20 @@
         this.kendoWidget.setOptions({ format: this.format });
       },
       
-      monthChanged: function() {
-        this.kendoWidget.setOptions({ month: this.month });
+      cultureChanged: function() {
+        this.kendoWidget.setOptions({ culture: this.culture });
+      },
+      
+      parseFormatsChanged: function() {
+        this.kendoWidget.setOptions({ parseFormats: this.parseFormats });
+      },
+      
+      minChanged: function() {
+        this.kendoWidget.setOptions({ min: this.min });
+      },
+      
+      maxChanged: function() {
+        this.kendoWidget.setOptions({ max: this.max });
       },
       
       startChanged: function() {
@@ -79,6 +71,18 @@
       
       animationChanged: function() {
         this.kendoWidget.setOptions({ animation: this.animation });
+      },
+      
+      monthChanged: function() {
+        this.kendoWidget.setOptions({ month: this.month });
+      },
+      
+      datesChanged: function() {
+        this.kendoWidget.setOptions({ dates: this.dates });
+      },
+      
+      ARIATemplateChanged: function() {
+        this.kendoWidget.setOptions({ ARIATemplate: this.ARIATemplate });
       },
       
       dataSourceChanged: function() {
