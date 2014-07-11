@@ -150,9 +150,17 @@
           },
           dasFooter: "Foo bar baz",
           menu: [
-            { text: "foo" },
+            { text: "foo", items: [
+              { text: "foo 1.1" },
+              { text: "foo 1.2" },
+              { text: "foo 1.3" },
+            ] },
             { text: "bar" },
-            { text: "baz" }
+            { text: "baz", items: [
+              { text: "bar 1.1" },
+              { text: "bar 1.2" },
+              { text: "bar 1.3" },
+            ] }
           ],
           popupWindow: function() {
             this.$.window.kendoWidget.open().center();
