@@ -1,11 +1,8 @@
 {
-  "name": "polymer",
+  "name": "polymer-kendo",
   "version": "0.0.0",
   "authors": [
     "Foo Bar"
-  ],
-  "moduleType": [
-    "globals"
   ],
   "license": "MIT",
   "private": true,
@@ -17,6 +14,8 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer"
-  }
+    "polymer": "Polymer/polymer#~0.5.2",
+    "ng-polymer-elements": "~0.2.0"
+  },
+  "homepage": "https://github.com/kendo-labs/polymer-kendo"
 }

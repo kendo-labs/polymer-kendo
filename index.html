@@ -2,175 +2,69 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="http://cdn.kendostatic.com/2014.3.1314/js/angular.min.js"></script>
     <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-    <link rel="import" href="k/k-calendar.html" />
+    <link rel="import" href="bower_components/core-list/core-list.html">
     <link rel="import" href="k/k-datepicker.html" />
-    <link rel="import" href="k/k-menu.html" />
-    <link rel="import" href="k/k-window.html" />
     <link rel="stylesheet" href="kendo/css/web/kendo.common.min.css" shim-shadowdom />
     <link rel="stylesheet" href="kendo/css/web/kendo.default.min.css" shim-shadowdom />
+    <script src="bower_components/ng-polymer-elements/ng-polymer-elements.min.js"></script>
     <style>
       body {
         font: 12px arial,sans-serif;
       }
     </style>
   </head>
-  <body unresolved touch-action="auto">
+  <body unresolved touch-action="auto" ng-app="app" ng-controller="MyCtrl">
+  <k-datepicker id="datepicker" ng-model="datePickerValue"></k-datepicker>
 
-    <polymer-element name="my-test" attributes="test">
-      <template>
+  Selected date<span>{{datePickerValue}}</span>
 
-        <p>
-          Data binding on <tt>value</tt>.  Both calendars and the text below
-          are bound to a Date element in the "model".
-        </p>
+  <button ng-click="add()">add</button>
+  <button ng-click="change()">change first</button>
 
-        <k-calendar value="{{calendarValue}}" footer="{{dasFooter}}"></k-calendar>
+  <core-list ng-model="items" style="width: 1000px;height: 100px;">
+     <template>
+     <div>
+         <div>{{model.name}}</div>
+         <input ng-model="model.name">
+         <k-datepicker ng-model="model.date"></k-datepicker>
+    </div>
+     </template>
+  </core-list>
 
-        <k-calendar value="{{calendarValue}}"></k-calendar>
+   <script>
+       document.getElementById("datepicker").addEventListener("change", function(e) {
+           console.log(this.value);
+       });
 
-        <p>
-          Value is {{ calendarValue }}.  <button on-click="{{setToday}}">Set to today</button>
-        </p>
-
-        <p>
-          <k-datepicker value="{{calendarValue}}"></k-datepicker>
-        </p>
-
-        <k-menu dataSource="{{menu}}"></k-menu>
-
-        <p>
-          Submenus are wrongfully positioned for some reason.
-        </p>
-
-        <k-menu>
-          <li>Foo
-            <ul>
-              <li>Foo 1
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-              <li>Foo 2
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-              <li>Foo 3
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>Foo
-            <ul>
-              <li>Foo 1
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-              <li>Foo 2
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-              <li>Foo 3
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>Foo
-            <ul>
-              <li>Foo 1
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-              <li>Foo 2
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-              <li>Foo 3
-                <ul>
-                  <li>Foo 1</li>
-                  <li>Foo 2</li>
-                  <li>Foo 3</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </k-menu>
-
-        <k-window id="window" draggable="true" resizable="true"
-                  title="{{windowTitle}}" modal="true" width="400" height="300">
-          <h2>Weirdo</h2>
-          <p>
-            Title binding does not work.  It does work in the following input though:
-          </p>
-          <input value="{{windowTitle}}" />
-          <p>
-            It seems to be because the name of the attribute is "title".
-            If I manually change k-window.html to assign another attribute
-            to options.title, then it does work.  This means that in order
-            to provide reliable options without clashing with other oddities
-            that may be, we would have to prefix the names like we do in
-            Angular.
-          </p>
-        </k-window>
-
-        <p>
-          <button on-click="{{popupWindow}}">{{windowTitle}}</button>
-        </p>
-      </template>
-      <script>
-        Polymer("my-test", {
-          calendarValue: new Date(2014, 0, 24),
-          setToday: function() {
-            this.calendarValue = new Date();
+       angular.module('ng-polymer-elements').constant('$ngPolymerMappings', {
+           kDatepicker: {
+              ngModel: {
+                 primitive: 'value'
+              }
           },
-          dasFooter: "Foo bar baz",
-          menu: [
-            { text: "foo", items: [
-              { text: "foo 1.1" },
-              { text: "foo 1.2" },
-              { text: "foo 1.3" },
-            ] },
-            { text: "bar" },
-            { text: "baz", items: [
-              { text: "bar 1.1" },
-              { text: "bar 1.2" },
-              { text: "bar 1.3" },
-            ] }
-          ],
-          popupWindow: function() {
-            this.$.window.kendoWidget.open().center();
-          },
-          windowTitle: "Hello Polymer"
-        });
-      </script>
-    </polymer-element>
+          coreList: {
+            ngModel: {
+                primitive: 'data'
+            },
+            ngTap: {
+                event: 'core-activate'
+            }
+        }
+       });
 
-    <my-test></my-test>
+       angular.module("app", ["kendo.directives","ng-polymer-elements"]).controller("MyCtrl", function($scope) {
+           $scope.datePickerValue = new Date();
+           $scope.items = [ { name: "John Doe" }, { name: "Jane Doe" } ];
+           $scope.add = function() {
+               $scope.items.push( { name: "Add at " + new Date } );
+           };
+           $scope.change = function() {
+               $scope.items[0].name = "Update at" + new Date();
+           };
+       });
 
+   </script>
   </body>
 </html>
